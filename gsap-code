@@ -1,0 +1,124 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // GSAP and ScrollTrigger Initialization
+    gsap.registerPlugin(ScrollTrigger);
+
+    // 1. Layout Image Fade and Scale on Scroll
+    gsap.fromTo(".layout_image", 
+      { opacity: 0, scale: 1.2 }, 
+      {
+        opacity: 1,
+        scale: 1,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: ".layout_image",
+          start: "top 75%",
+          end: "bottom 25%",
+          scrub: true,
+          toggleActions: "play none none none",
+        }
+      }
+    );
+
+    // 2. Heading Fade Animation with Stagger
+    gsap.from(".heading_fade", 
+      {
+        opacity: 0,
+        y: 50,
+        duration: 1,
+        stagger: 0.1,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: ".heading_fade",
+          start: "top 85%",
+          toggleActions: "play none none none",
+        }
+      }
+    );
+
+    // 3. Text Fade Animation with Stagger
+    gsap.from(".text_fade", 
+      {
+        opacity: 0,
+        y: 50,
+        duration: 1,
+        stagger: 0.1,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: ".text_fade",
+          start: "top 85%",
+          toggleActions: "play none none none",
+        }
+      }
+    );
+
+    // 4. Card Stagger Animation
+    gsap.from(".stagger_card", 
+      {
+        opacity: 0,
+        y: 50,
+        duration: 1,
+        stagger: 0.2,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: ".stagger_card",
+          start: "top 85%",
+          toggleActions: "play none none none",
+        }
+      }
+    );
+
+    // 5. Full-width Fade In with Scale (no opacity change)
+    gsap.fromTo(".full-w_fade-in", 
+      { scale: 1.2 }, 
+      {
+        scale: 1,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: ".full-w_fade-in",
+          start: "top 75%",
+          end: "bottom 25%",
+          scrub: true,
+          toggleActions: "play none none none",
+        }
+      }
+    );
+  });
+</script>
+
+<style>
+/* Performance-friendly CSS */
+.layout_image,
+.full-w_fade-in,
+.heading_fade,
+.text_fade,
+.stagger_card {
+  /* Enable GPU acceleration */
+  will-change: transform, opacity;
+}
+
+/* General Layout Styling to Reduce Repaints */
+html {
+  scroll-behavior: smooth; /* Enables smoother scrolling for a better experience */
+}
+
+.layout_image,
+.full-w_fade-in {
+  transform-origin: center; /* Prevents any weird scaling issues */
+}
+
+/* Optional: Fallback for browsers that don't support will-change */
+@supports not (will-change: transform) {
+  .layout_image,
+  .full-w_fade-in,
+  .heading_fade,
+  .text_fade,
+  .stagger_card {
+    transition: opacity 0.3s, transform 0.3s;
+  }
+}
+
+</style>
